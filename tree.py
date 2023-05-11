@@ -26,7 +26,7 @@ class Tree():
 
     #finds the square residual of a problem
     def square_riz(self,observed, actual):
-
+        
         sqrRiz = 0
         for x in observed:
             sqrRiz = sqrRiz + (x - actual) ** 2
@@ -42,6 +42,7 @@ class Tree():
         for y in range(1,col):
 
             #added a sorting algorithm before testing each split
+            
             data = self.sort(data,y)
             for x in range(0,data.shape[1]-1):
                 
@@ -88,7 +89,7 @@ class Tree():
         self.root = self.makeHelper(data,0)
 
     def split(self,data, index):
-    
+        
         left = []
         for row in range(0, data.shape[0]):
             array = np.array([])
@@ -123,7 +124,7 @@ class Tree():
     #need to make better sorting algorithm later
     #sorts data of a 2d array, runtime complexity is O(n^3)
     def sort(self,array, col):
-
+       
         for i in range(0,len(array[0])-1):
 
             for j in range(0, len(array[0])-1):

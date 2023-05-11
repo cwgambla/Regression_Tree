@@ -7,6 +7,7 @@ import numpy as np
 # ,as the file pathing can get messed up if used on a different operating system
 #If there is a problem reading the csv file, its likely due to pathing issues
 def getDataFrame(fileName):
+    print("Filename: " + fileName)
     data = pd.read_csv(fileName)   
     df = pd.DataFrame(data)
     return df
@@ -42,13 +43,13 @@ def parseArray(dataFrame, start_row, endRow, attributes):
 #parameters: the regression tree object,numTrain: the number of elements you want in the training set
 #dataFrame: the dataFrame with all the data, is a pandas dataFrame,attributes: which types of data will be predicting
 #and which one will be predicted, and error: the allowed error for each guess to be considered accurate
-def testAccurracy(tree,numTrain, dataFrame,attributes, error):
+def testAccurracy(Tree,numTrain, dataFrame,attributes, error):
     
     trainingData = parseArray(dataFrame, 0, numTrain,attributes)
     testData = parseArray(dataFrame, numTrain + 1, len(dataFrame.index)-1,attributes)
     # print(testData)
-    tree.makeTree(trainingData)
-
+    Tree.makeTree(trainingData)
+    print(Tree)
     total = len(testData[0])
     right = 0
     for currIndex in range(0,len(testData[0])):
@@ -60,7 +61,7 @@ def testAccurracy(tree,numTrain, dataFrame,attributes, error):
             arrayPredictors.append(i[currIndex])
         # print(testData[1::])
 
-        prediction = tree.predict(arrayPredictors)
+        prediction = Tree.predict(arrayPredictors)
 
         #print(arrayPredictors,prediction, testData[0][currIndex],(prediction - testData[0][currIndex])/testData[0][currIndex])
         
@@ -68,6 +69,14 @@ def testAccurracy(tree,numTrain, dataFrame,attributes, error):
             right += 1
     
     return right/total
+def createTree(Tree,numTrain, dataFrame,attributes, error):
+    
+    trainingData = parseArray(dataFrame, 0, numTrain,attributes)
+    testData = parseArray(dataFrame, numTrain + 1, len(dataFrame.index)-1,attributes)
+    # print(testData)
+    Tree.makeTree(trainingData)
+    print(Tree)
+    return Tree
 
 def kTest(tree, numTrain, dataFrame,attributes, error, k):
     error = []
